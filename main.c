@@ -36,6 +36,7 @@ void draw() {
     }
 
     printf("score = %d\n", game_score());
+    printf("press W A S D to control snake\n");
     printf("press R to restart the game\n");
     printf("press Q to quit the game\n");
     printf("%d %d\n", game_fruit_pos().x, game_fruit_pos().y);
