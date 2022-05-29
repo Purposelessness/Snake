@@ -29,11 +29,11 @@ void reset_game() {
 
 void generate_fruit() {
     do {
-        fruit_pos.x = rand() % 20;
+        fruit_pos.x = rand() % (WIDTH - 1);
     } while (fruit_pos.x == 0);
 
     do {
-        fruit_pos.y = rand() % 20;
+        fruit_pos.y = rand() % (HEIGHT - 1);
     } while (fruit_pos.y == 0);
 }
 
