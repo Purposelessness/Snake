@@ -45,7 +45,7 @@ int main() {
     start_game();
     while (game_is_processing() == TRUE) {
         draw();
-        usleep(SLEEP_TIME);
+        usleep(REFRESH_TIME);
         process_game();
     }
 
