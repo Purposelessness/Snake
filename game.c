@@ -82,7 +82,7 @@ void process_game() {
 
     move_snake(direction);
     point_t head = snake_head();
-    if (IS_WALL(head) == TRUE) {
+    if (POINT_IS_WALL(head) == TRUE) {
         reset_game();
         return;
     }

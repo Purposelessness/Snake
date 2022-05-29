@@ -1,12 +1,10 @@
 #include <string.h>
 #include "snake.h"
 
-int len;
 int size;
 point_t pos[MAX_SNAKE_LEN] = {};
 
 void reset_snake() {
-    len = 1;
     size = 1;
     pos[0].x = WIDTH / 2;
     pos[0].y = HEIGHT / 2;
