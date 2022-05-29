@@ -27,14 +27,22 @@ void reset_game() {
     direction = NONE;
 }
 
+bool_t check_fruit_pos(point_t p, struct points sp) {
+    if (p.x == 0 || p.y == 0)
+        return FALSE;
+    for (int i = 0; i < sp.len; ++i) {
+        if (POINTS_EQUAL(p, sp.data[i]))
+            return FALSE;
+    }
+    return TRUE;
+}
+
 void generate_fruit() {
+    struct points sp = snake_points();
     do {
         fruit_pos.x = rand() % (WIDTH - 1);
-    } while (fruit_pos.x == 0);
-
-    do {
         fruit_pos.y = rand() % (HEIGHT - 1);
-    } while (fruit_pos.y == 0);
+    } while (!check_fruit_pos(fruit_pos, sp));
 }
 
 void process_input() {
