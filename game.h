@@ -12,6 +12,8 @@ int game_score();
 
 point_t game_fruit_pos();
 
+point_t game_shrink_fruit_pos();
+
 bool_t game_is_processing();
 
 direction_t game_direction();

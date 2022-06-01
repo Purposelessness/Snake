@@ -5,13 +5,24 @@
 #include "snake.h"
 #include "utility.h"
 
-point_t fruit_pos = {};
+enum item {
+    FRUIT,
+    SHRINK_FRUIT
+};
+
+typedef struct {
+    enum item type;
+    point_t pos;
+} item_t;
+
+item_t fruit = {FRUIT, {}};
+item_t shrink_fruit = {SHRINK_FRUIT, {}};
 int score;
 bool_t is_processing;
 
 direction_t direction = NONE;
 
-void generate_fruit();
+void generate_item(item_t *item);
 
 void reset_game();
 
@@ -22,27 +33,38 @@ void start_game() {
 
 void reset_game() {
     reset_snake();
-    generate_fruit();
+    generate_item(&fruit);
+    generate_item(&shrink_fruit);
     score = 0;
     direction = NONE;
 }
 
-bool_t check_fruit_pos(point_t p, struct points sp) {
-    if (p.x == 0 || p.y == 0)
-        return FALSE;
+bool_t check_fruit_pos(item_t item, struct points sp) {
+    switch (item.type) {
+        case FRUIT:
+            if (POINTS_EQUAL(item.pos, shrink_fruit.pos))
+                return FALSE;
+            break;
+        case SHRINK_FRUIT:
+            if (POINTS_EQUAL(item.pos, fruit.pos))
+                return FALSE;
+            break;
+        default:
+            break;
+    }
     for (int i = 0; i < sp.len; ++i) {
-        if (POINTS_EQUAL(p, sp.data[i]))
+        if (POINTS_EQUAL(item.pos, sp.data[i]))
             return FALSE;
     }
     return TRUE;
 }
 
-void generate_fruit() {
+void generate_item(item_t *item) {
     struct points sp = snake_points();
     do {
-        fruit_pos.x = rand() % (WIDTH - 1);
-        fruit_pos.y = rand() % (HEIGHT - 1);
-    } while (!check_fruit_pos(fruit_pos, sp));
+        item->pos.x = rand() % (WIDTH - 2) + 1;
+        item->pos.y = rand() % (HEIGHT - 2) + 1;
+    } while (!check_fruit_pos(*item, sp));
 }
 
 void process_input() {
@@ -70,6 +92,10 @@ void process_input() {
     }
 }
 
+void update_score() {
+    score = (snake_len() - 1) * 10;
+}
+
 void process_game() {
     direction_t prev_direction = direction;
     process_input();
@@ -95,10 +121,16 @@ void process_game() {
         }
     }
 
-    if (POINTS_EQUAL(head, fruit_pos) == TRUE) {
+    if (POINTS_EQUAL(head, fruit.pos) == TRUE) {
         snake_eat_fruit();
-        generate_fruit();
-        score += 10;
+        generate_item(&fruit);
+        update_score();
+    }
+
+    if (POINTS_EQUAL(head, shrink_fruit.pos) == TRUE) {
+        snake_shrink();
+        generate_item(&shrink_fruit);
+        update_score();
     }
 }
 
@@ -107,7 +139,11 @@ int game_score() {
 }
 
 point_t game_fruit_pos() {
-    return fruit_pos;
+    return fruit.pos;
+}
+
+point_t game_shrink_fruit_pos() {
+    return shrink_fruit.pos;
 }
 
 bool_t game_is_processing() {

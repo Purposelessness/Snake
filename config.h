@@ -14,6 +14,7 @@
 #define SNAKE_CH "0"
 #define BORDER_CH "#"
 #define FRUIT_CH "*"
+#define SHRINK_FRUIT_CH "@"
 
 
 #endif //SNAKECONSOLE_CONFIG_H

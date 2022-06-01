@@ -16,5 +16,7 @@ struct points snake_points();
 
 void snake_eat_fruit();
 
+void snake_shrink();
+
 
 #endif //SNAKECONSOLE_SNAKE_H

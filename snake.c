@@ -45,6 +45,11 @@ void snake_eat_fruit() {
     ++size;
 }
 
+void snake_shrink() {
+    if (size != 1)
+        size = size / 2 + size % 2;
+}
+
 int snake_len() {
     return size;
 }

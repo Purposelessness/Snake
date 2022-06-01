@@ -27,6 +27,8 @@ void draw() {
                 }
                 if (x == game_fruit_pos().x && y == game_fruit_pos().y)
                     printf(FRUIT_CH);
+                else if (x == game_shrink_fruit_pos().x && y == game_shrink_fruit_pos().y)
+                    printf(SHRINK_FRUIT_CH);
                 else if (snake_flag == FALSE)
                     printf(" ");
             }
@@ -39,6 +41,8 @@ void draw() {
     printf("press W A S D to control snake\n");
     printf("press R to restart the game\n");
     printf("press Q to quit the game\n");
+    printf("(%d %d), (%d %d)\n", game_fruit_pos().x, game_fruit_pos().y, game_shrink_fruit_pos().x,
+           game_shrink_fruit_pos().y);
 }
 
 int main() {
