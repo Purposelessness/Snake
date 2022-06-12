@@ -2,6 +2,7 @@
 #define SNAKECONSOLE_GAME_H
 
 
+#include <stdbool.h>
 #include "data_structures.h"
 
 void start_game();
@@ -14,7 +15,7 @@ point_t game_fruit_pos();
 
 point_t game_shrink_fruit_pos();
 
-bool_t game_is_processing();
+bool game_is_processing();
 
 direction_t game_direction();
 

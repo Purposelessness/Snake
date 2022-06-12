@@ -1,13 +1,24 @@
 #include <stdio.h>
-#include <stdlib.h>
 #include <unistd.h>
+#include <windows.h>
+#include <stdbool.h>
 
 #include "data_structures.h"
 #include "game.h"
 #include "snake.h"
 
+void hide_cursor()
+{
+    HANDLE console_handle = GetStdHandle(STD_OUTPUT_HANDLE);
+    CONSOLE_CURSOR_INFO info;
+    info.dwSize = 100;
+    info.bVisible = FALSE;
+    SetConsoleCursorInfo(console_handle, &info);
+}
+
 void draw() {
-    system("cls");
+    COORD coord = {0, 0};
+    SetConsoleCursorPosition(GetStdHandle(STD_OUTPUT_HANDLE), coord);
 
     struct points sp = snake_points();
 
@@ -18,18 +29,18 @@ void draw() {
                 y == 0 || y == HEIGHT - 1) {
                 printf(BORDER_CH);
             } else {
-                bool_t snake_flag = FALSE;
+                bool snake_flag = false;
                 for (int i = 0; i < sp.len; ++i) {
                     if (x == sp.data[i].x && y == sp.data[i].y) {
                         printf(SNAKE_CH);
-                        snake_flag = TRUE;
+                        snake_flag = true;
                     }
                 }
                 if (x == game_fruit_pos().x && y == game_fruit_pos().y)
                     printf(FRUIT_CH);
                 else if (x == game_shrink_fruit_pos().x && y == game_shrink_fruit_pos().y)
                     printf(SHRINK_FRUIT_CH);
-                else if (snake_flag == FALSE)
+                else if (snake_flag == false)
                     printf(" ");
             }
 
@@ -46,8 +57,9 @@ void draw() {
 }
 
 int main() {
+    hide_cursor();
     start_game();
-    while (game_is_processing() == TRUE) {
+    while (game_is_processing() == true) {
         draw();
         usleep(REFRESH_TIME);
         process_game();

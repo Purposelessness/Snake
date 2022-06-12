@@ -4,11 +4,6 @@
 
 #include "config.h"
 
-typedef enum {
-    FALSE = 0,
-    TRUE = 1
-} bool_t;
-
 typedef struct {
     int x;
     int y;
