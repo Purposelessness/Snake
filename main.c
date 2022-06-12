@@ -52,8 +52,8 @@ void draw() {
     printf("press W A S D to control snake\n");
     printf("press R to restart the game\n");
     printf("press Q to quit the game\n");
-    printf("(%d %d), (%d %d)\n", game_fruit_pos().x, game_fruit_pos().y, game_shrink_fruit_pos().x,
-           game_shrink_fruit_pos().y);
+//    printf("(%d %d), (%d %d)\n", game_fruit_pos().x, game_fruit_pos().y, game_shrink_fruit_pos().x,
+//           game_shrink_fruit_pos().y);
 }
 
 int main() {
